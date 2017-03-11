@@ -3,13 +3,13 @@ require "sistema/core/Router.php";
 require "sistema/core/Controlador.php";
 require "sistema/core/api/ControladorApi.php";
 require "config/general.php";
+require_once "config/rutas.php";
 
 $router = new Router();
-$router->setControladorDefault("inicio");
-$router->getRoute();
-$entornoString = $config["entorno"];
+//$router->setControladorDefault("inicio");
 $controladorString = $router->getControlador();
 $metodoString =  $router->getMetodo();
+
 if(!is_file("app/controladores/".$controladorString.".php")){
     exit("No se ha encontrado el controlador ".$controladorString);
 }
