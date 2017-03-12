@@ -1,14 +1,24 @@
 <?php
 require "sistema/core/Router.php";
+require "sistema/core/Config.php";
+require "sistema/core/Tema.php";
 require "sistema/core/Controlador.php";
-require "sistema/core/api/ControladorApi.php";
+require "sistema/core/Modelo.php";
+require "sistema/core/Vista.php";
+require "sistema/database/Database.php";
+
+require "config/rutas.php";
 require "config/general.php";
-require_once "config/rutas.php";
+require "config/tema.php";
+require "config/database.php";
 
 $router = new Router();
-//$router->setControladorDefault("inicio");
 $controladorString = $router->getControlador();
 $metodoString =  $router->getMetodo();
+
+if($controladorString == null){
+    exit("No se ha configurado el controlador default");
+}
 
 if(!is_file("app/controladores/".$controladorString.".php")){
     exit("No se ha encontrado el controlador ".$controladorString);

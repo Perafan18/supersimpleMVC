@@ -3,10 +3,10 @@
 /**
  * Created by PhpStorm.
  * User: pedro
- * Date: 10/03/2017
- * Time: 11:55 PM
+ * Date: 12/03/2017
+ * Time: 01:54 AM
  */
-class Conexion
+class MongoDb
 {
 
 }

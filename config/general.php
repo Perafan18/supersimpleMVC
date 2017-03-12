@@ -2,10 +2,8 @@
 //DEVELOPMENT
 //TESTING
 //PRODUCTION
-$config["entorno"] = "DEVELOPMENT";
+Config::addPropiedad("entorno","DEVELOPMENT");
 
-$config["metodoDefault"] = "";
-
-$config["url"]["DEVELOPMENT"] = "http://localhost/supersimpleMVC/";
-//$config["url"]["TESTING"] = "";
-//$config["url"]["PRODUCTION"] = "";
+Router::setUrl("DEVELOPMENT","http://localhost/supersimpleMVC/");
+//Router::setUrl("TESTING","");
+//Router::setUrl("PRODUCTION","");

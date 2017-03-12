@@ -8,5 +8,8 @@
  */
 class Modelo
 {
+    protected function loadDatabase($nombreBaseDeDatos){
+        return Database::getDataBase($nombreBaseDeDatos);
+    }
 
 }

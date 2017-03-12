@@ -1,28 +1,25 @@
 <?php
 
-class usuario extends ControladorApi
+class usuario extends Controlador
 {
-    public function index(){
-        echo json_encode(array("b"=>"b"));
-    }
 
     public function getOne(){
-        echo json_encode(array("Metodo"=>"getOne"));
+        $this->json(array("Metodo"=>"getOne"));
     }
 
     public function getAll(){
-        echo json_encode(array("Metodo"=>"getAll"));
+        $this->json(array("Metodo"=>"getAll"));
     }
 
     public function create(){
-        echo json_encode(array("Metodo"=>"create"));
+        $this->json(array("Metodo"=>"create"));
     }
 
     public function update(){
-        echo json_encode(array("Metodo"=>"update"));
+        $this->json(array("Metodo"=>"update"));
     }
 
     public function delete(){
-        echo json_encode(array("Metodo"=>"delete"));
+        $this->json(array("Metodo"=>"delete"));
     }
 }

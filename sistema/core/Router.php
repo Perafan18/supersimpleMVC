@@ -1,5 +1,6 @@
 <?php
 
+
 class Router{
     private static $instanciaRouter;
 
@@ -8,10 +9,13 @@ class Router{
 
     public $controladorString;
     public $metodoString;
-    private $controladorDefault;
+    private static $controladorDefault;
     private $metodoDefault = "index";
     private $segmentosReales;
     private $requestMethodString;
+
+    private static $urlString;
+    private static $entornoString;
 
     public static $rutasArray = array();
 
@@ -21,20 +25,29 @@ class Router{
     {
         $this->rutaRealString = $_SERVER['REQUEST_URI'];
         $this->requestMethodString = $_SERVER['REQUEST_METHOD'];
-
+        $segmentosRutaArray = array();
         $posicionIndex = strpos($this->rutaRealString,"index.php");
-        $segmentos =  substr($this->rutaRealString,$posicionIndex+strlen("index.php")+1);
-        $this->rutaActionString = $segmentos;
-        foreach (self::$rutasArray as $posicionRuta => $configuracionRuta){
-            $uriString = str_replace("/",'\/',$configuracionRuta["URI"]);
-            if(preg_match("/^{$uriString}+$/", $segmentos)){
-                if($configuracionRuta["METHOD"] == "" || $configuracionRuta["METHOD"] == $this->requestMethodString){
-                    $this->rutaActionString = $configuracionRuta["ACTION"];
+        if($posicionIndex!==false){
+            $posicionGet = strpos($this->rutaRealString,"?");
+            $posicionInicial = $posicionIndex+strlen("index.php")+1;
+            if($posicionGet!==FALSE){
+                $segmentos =  substr($this->rutaRealString,$posicionInicial,$posicionGet-$posicionInicial);
+            }else{
+                $segmentos =  substr($this->rutaRealString,$posicionInicial);
+            }
+
+            $this->rutaActionString = $segmentos;
+            foreach (self::$rutasArray as $posicionRuta => $configuracionRuta){
+                $uriString = str_replace("/",'\/',$configuracionRuta["URI"]);
+                if(preg_match("/^{$uriString}+$/", $segmentos)){
+                    if($configuracionRuta["METHOD"] == "" || $configuracionRuta["METHOD"] == $this->requestMethodString){
+                        $this->rutaActionString = $configuracionRuta["ACTION"];
+                    }
                 }
             }
+            $segmentosRutaArray = explode("/",$this->rutaActionString);
         }
-        $segmentosRutaArray = explode("/",$this->rutaActionString);
-        $this->controladorString = (isset($segmentosRutaArray[0]) && $segmentosRutaArray[0] != "")? $segmentosRutaArray[0] :  $this->controladorDefault;
+        $this->controladorString = (isset($segmentosRutaArray[0]) && $segmentosRutaArray[0] != "")? $segmentosRutaArray[0] :  self::$controladorDefault;
         $this->metodoString = (isset($segmentosRutaArray[1])&& $segmentosRutaArray[1] != "") ? $segmentosRutaArray[1] : $this->metodoDefault;
         $this->segmentosReales = $segmentosRutaArray;
     }
@@ -44,8 +57,8 @@ class Router{
         array_push(self::$rutasArray,$ruta);
     }
 
-    public function setControladorDefault($controladorDefault){
-        $this->controladorDefault = $controladorDefault;
+    public static function setControladorDefault($controladorDefault){
+        self::$controladorDefault = $controladorDefault;
     }
 
     public function getControlador(){
@@ -66,6 +79,15 @@ class Router{
     public function getSegmentos()
     {
         return $this->segmentosReales;
+    }
+
+    /**
+     * @param mixed $urlString
+     */
+    public static function setUrl($entornoString,$urlString)
+    {
+        self::$urlString = $urlString;
+        self::$entornoString = $entornoString;
     }
 
     public static function getInstance()

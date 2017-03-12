@@ -1,11 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pedro
- * Date: 10/03/2017
- * Time: 11:15 PM
- */
-$config["tema"] = "ssmvc";
 
-$config["temas"]["ssmvc"]["css"] = array();
-$config["temas"]["ssmvc"]["js"] = array();
+$temaSSMVC = new Tema("ssmvc");
+$temaSSMVC->addCss(array(
+    "bootstrap",
+    "bootstrap-theme"
+));
+
+$temaSSMVC->addJs(array(
+    "jquery",
+    "bootstrap"
+));
+$temaSSMVC->addPropiedad("icon","valor");
+
+Config::addPropiedad("tema",$temaSSMVC);
